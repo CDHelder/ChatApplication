@@ -20,5 +20,10 @@ namespace ChatApplication.Data
         public DbSet<Message> Messages { get; set; }
         public DbSet<PrivateChat> PrivateChats { get; set; }
         public DbSet<PublicChat> PublicChats { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
     }
 }
