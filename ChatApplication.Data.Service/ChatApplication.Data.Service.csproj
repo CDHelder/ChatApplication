@@ -63,6 +63,7 @@
     <Compile Include="SpecificRepositories\UoFMessageRepository.cs" />
     <Compile Include="SpecificRepositories\UoFPrivateChatRepository.cs" />
     <Compile Include="SpecificRepositories\UoFPublicChatRepository.cs" />
+    <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
