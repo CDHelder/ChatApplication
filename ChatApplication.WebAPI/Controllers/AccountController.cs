@@ -20,7 +20,7 @@ using ChatApplication.Domain.Identity;
 
 namespace ChatApplication.WebAPI.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {

@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ChatApplication.Data.Service.Interfaces
+{
+    public interface IGenericRepository<TEntity> where TEntity : class
+    {
+        List<TEntity> GetAll(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
+        TEntity Get(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
+        TEntity GetById(int id);
+        void Create(TEntity obj);
+        void Create(List<TEntity> objs);
+        void Update(TEntity obj);
+        void Update(List<TEntity> objs);
+        void Delete(int id);
+        void Delete(TEntity entity);
+        void Delete(List<TEntity> entities);
+    }
+}
