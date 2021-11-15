@@ -1,5 +1,6 @@
 namespace ChatApplication.Data.Migrations
 {
+    using ChatApplication.Business;
     using ChatApplication.Domain.Entities;
     using ChatApplication.Domain.Identity;
     using System;
@@ -8,11 +9,14 @@ namespace ChatApplication.Data.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
     using System.Security.Cryptography;
+    using System.Text;
 
     internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
+        private HashingService hashingService;
         public Configuration()
         {
+            hashingService = new HashingService();
             AutomaticMigrationsEnabled = false;
         }
 
@@ -26,24 +30,31 @@ namespace ChatApplication.Data.Migrations
             string userId_5 = "6d16d251-2c5e-42b5-90f6-188ab87fba3f";
             string userId_6 = "86ccdab9-6b04-4f6e-8229-33658420d037";
 
-            string userPassword_1 = CreatePasswordHash("HenkHenk123!");
-            string userPassword_2 = CreatePasswordHash("JaapJaap123!");
-            string userPassword_3 = CreatePasswordHash("PietPiet123!");
-            string userPassword_4 = CreatePasswordHash("JanJan123!");
-            string userPassword_5 = CreatePasswordHash("ChrisChris123!");
-            string userPassword_6 = CreatePasswordHash("DaanDaan123!");
+            string userSalt_1 = hashingService.CreateSalt();
+            string userSalt_2 = hashingService.CreateSalt();
+            string userSalt_3 = hashingService.CreateSalt();
+            string userSalt_4 = hashingService.CreateSalt();
+            string userSalt_5 = hashingService.CreateSalt();
+            string userSalt_6 = hashingService.CreateSalt();
+
+            string userPassword_1 = hashingService.CreatePasswordHash("HenkHenk123!", userSalt_1);
+            string userPassword_2 = hashingService.CreatePasswordHash("JaapJaap123!", userSalt_2);
+            string userPassword_3 = hashingService.CreatePasswordHash("PietPiet123!", userSalt_3);
+            string userPassword_4 = hashingService.CreatePasswordHash("JanJan123!", userSalt_4);
+            string userPassword_5 = hashingService.CreatePasswordHash("ChrisChris123!", userSalt_5);
+            string userPassword_6 = hashingService.CreatePasswordHash("DaanDaan123!", userSalt_6);
 
             ApplicationUser[] users = new ApplicationUser[] {
-                new ApplicationUser { Id = userId_1, Email = "Henk123@gmail.com", EmailConfirmed = true, UserName = "Henk123", PasswordHash = userPassword_1  },
-                new ApplicationUser { Id = userId_2, Email = "Jaap123@gmail.com", EmailConfirmed = true, UserName = "Jaap123", PasswordHash = userPassword_2  },
-                new ApplicationUser { Id = userId_3, Email = "Piet123@gmail.com", EmailConfirmed = true, UserName = "Piet123", PasswordHash = userPassword_3  },
-                new ApplicationUser { Id = userId_4, Email = "Jan123@gmail.com", EmailConfirmed = true, UserName = "Jan123", PasswordHash = userPassword_4  }
+                new ApplicationUser { Id = userId_1, Email = "Henk123@gmail.com", EmailConfirmed = true, UserName = "Henk123", PasswordHash = userPassword_1, Salt = userSalt_1 },
+                new ApplicationUser { Id = userId_2, Email = "Jaap123@gmail.com", EmailConfirmed = true, UserName = "Jaap123", PasswordHash = userPassword_2, Salt = userSalt_2 },
+                new ApplicationUser { Id = userId_3, Email = "Piet123@gmail.com", EmailConfirmed = true, UserName = "Piet123", PasswordHash = userPassword_3, Salt = userSalt_3  },
+                new ApplicationUser { Id = userId_4, Email = "Jan123@gmail.com", EmailConfirmed = true, UserName = "Jan123", PasswordHash = userPassword_4, Salt = userSalt_4  }
             };
 
             ApplicationUser[] groupChatUsers = new ApplicationUser[]
             {
-                new ApplicationUser { Id = userId_5, Email = "Chris123@gmail.com", EmailConfirmed = true, UserName = "Chris123", PasswordHash = userPassword_5  },
-                new ApplicationUser { Id = userId_6, Email = "Daan123@gmail.com", EmailConfirmed = true, UserName = "Daan123", PasswordHash = userPassword_6  }
+                new ApplicationUser { Id = userId_5, Email = "Chris123@gmail.com", EmailConfirmed = true, UserName = "Chris123", PasswordHash = userPassword_5, Salt = userSalt_5  },
+                new ApplicationUser { Id = userId_6, Email = "Daan123@gmail.com", EmailConfirmed = true, UserName = "Daan123", PasswordHash = userPassword_6, Salt = userSalt_6  }
             };
 
             Message[] privateChatMessages = new Message[] {
@@ -108,13 +119,6 @@ namespace ChatApplication.Data.Migrations
             context.Messages.AddOrUpdate(x => x.Id, publicChatMessages);
             context.Messages.AddOrUpdate(x => x.Id, groupChatMessages);
 
-        }
-        private string CreatePasswordHash(string password)
-        {
-            byte[] salt;
-            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 100000);
-            return pbkdf2.GetBytes(20).ToString();
         }
     }
 }

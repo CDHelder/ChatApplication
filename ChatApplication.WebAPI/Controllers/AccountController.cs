@@ -17,6 +17,8 @@ using ChatApplication.WebAPI.Models;
 using ChatApplication.WebAPI.Providers;
 using ChatApplication.WebAPI.Results;
 using ChatApplication.Domain.Identity;
+using ChatApplication.Data.Service;
+using ChatApplication.Business;
 
 namespace ChatApplication.WebAPI.Controllers
 {
@@ -26,6 +28,7 @@ namespace ChatApplication.WebAPI.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        private HashingService hashingService = new HashingService();
 
         public AccountController()
         {
@@ -126,7 +129,7 @@ namespace ChatApplication.WebAPI.Controllers
 
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
                 model.NewPassword);
-            
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -259,8 +262,8 @@ namespace ChatApplication.WebAPI.Controllers
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
@@ -319,6 +322,52 @@ namespace ChatApplication.WebAPI.Controllers
             return logins;
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("Login")]
+        public async Task<IHttpActionResult> Login(RegisterBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = UserManager.FindByEmail(model.Email);
+
+            if (user == null)
+            {
+                return BadRequest($"Coulnd't find user with email: '{model.Email}'");
+            }
+
+            var password = hashingService.CreatePasswordHash(model.Password, user.Salt);
+            bool passCheck = user.PasswordHash == password;
+
+            //TODO: Login Verder maken
+            if (passCheck == true)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Email, user.Email)
+                };
+
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationType);
+                var authProps = ApplicationOAuthProvider.CreateProperties(user.UserName);
+                authProps.IsPersistent = false;
+
+                //var userIdentity = UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+                //var authProps = ApplicationOAuthProvider.CreateProperties(user.UserName);
+                //authProps.IsPersistent = false;
+
+                Authentication.SignIn(authProps, identity);
+
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
@@ -369,7 +418,7 @@ namespace ChatApplication.WebAPI.Controllers
             result = await UserManager.AddLoginAsync(user.Id, info.Login);
             if (!result.Succeeded)
             {
-                return GetErrorResult(result); 
+                return GetErrorResult(result);
             }
             return Ok();
         }
@@ -386,6 +435,17 @@ namespace ChatApplication.WebAPI.Controllers
         }
 
         #region Helpers
+
+        private byte[] CreateSalt()
+        {
+            return new byte[16];
+        }
+
+        private string DecodeUrlBase64(string s)
+        {
+            s = s.Replace('-', '+').Replace('_', '/').PadRight(4 * ((s.Length + 3) / 4), '=');
+            return s;
+        }
 
         private IAuthenticationManager Authentication
         {

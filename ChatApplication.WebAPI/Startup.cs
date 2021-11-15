@@ -13,6 +13,8 @@ namespace ChatApplication.WebAPI
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+
         }
     }
 }

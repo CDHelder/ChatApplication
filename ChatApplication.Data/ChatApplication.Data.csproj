@@ -60,6 +60,14 @@
     <Compile Include="Migrations\202111031320363_CreateDatabase.Designer.cs">
       <DependentUpon>202111031320363_CreateDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111151213333_AddSaltAppUserProp.cs" />
+    <Compile Include="Migrations\202111151213333_AddSaltAppUserProp.Designer.cs">
+      <DependentUpon>202111151213333_AddSaltAppUserProp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111151246156_ChangeSaltToString.cs" />
+    <Compile Include="Migrations\202111151246156_ChangeSaltToString.Designer.cs">
+      <DependentUpon>202111151246156_ChangeSaltToString.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -68,6 +76,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ChatApplication.Business\ChatApplication.Business.csproj">
+      <Project>{62308C33-D599-4860-8917-27950F57FA00}</Project>
+      <Name>ChatApplication.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChatApplication.Domain\ChatApplication.Domain.csproj">
       <Project>{359b9fb2-c012-497c-b111-e25f9573a0ff}</Project>
       <Name>ChatApplication.Domain</Name>
@@ -76,6 +88,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202111031320363_CreateDatabase.resx">
       <DependentUpon>202111031320363_CreateDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111151213333_AddSaltAppUserProp.resx">
+      <DependentUpon>202111151213333_AddSaltAppUserProp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111151246156_ChangeSaltToString.resx">
+      <DependentUpon>202111151246156_ChangeSaltToString.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

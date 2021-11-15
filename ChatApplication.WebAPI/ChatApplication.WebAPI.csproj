@@ -308,6 +308,14 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ChatApplication.Business\ChatApplication.Business.csproj">
+      <Project>{62308C33-D599-4860-8917-27950F57FA00}</Project>
+      <Name>ChatApplication.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChatApplication.Data.Service\ChatApplication.Data.Service.csproj">
+      <Project>{D22A443C-FA61-4981-B6D2-267D3C2E55AF}</Project>
+      <Name>ChatApplication.Data.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChatApplication.Data\ChatApplication.Data.csproj">
       <Project>{325FF327-D07B-4F0C-9511-9CBE1AA641D9}</Project>
       <Name>ChatApplication.Data</Name>
