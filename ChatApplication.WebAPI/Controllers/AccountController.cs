@@ -6,7 +6,6 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -17,7 +16,6 @@ using ChatApplication.WebAPI.Models;
 using ChatApplication.WebAPI.Providers;
 using ChatApplication.WebAPI.Results;
 using ChatApplication.Domain.Identity;
-using ChatApplication.Data.Service;
 using ChatApplication.Business;
 
 namespace ChatApplication.WebAPI.Controllers
@@ -325,7 +323,7 @@ namespace ChatApplication.WebAPI.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("Login")]
-        public async Task<IHttpActionResult> Login(RegisterBindingModel model)
+        public async Task<IHttpActionResult> Login(LoginBindingModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -342,12 +340,11 @@ namespace ChatApplication.WebAPI.Controllers
             var password = hashingService.CreatePasswordHash(model.Password, user.Salt);
             bool passCheck = user.PasswordHash == password;
 
-            //TODO: Login Verder maken
             if (passCheck == true)
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.NameIdentifier, hashingService.CreatePasswordHash(user.Id.ToString(), user.Salt)),
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(ClaimTypes.Email, user.Email)
                 };
@@ -365,7 +362,7 @@ namespace ChatApplication.WebAPI.Controllers
                 return Ok();
             }
 
-            return BadRequest();
+            return BadRequest("Incorrect password");
         }
 
         // POST api/Account/Register

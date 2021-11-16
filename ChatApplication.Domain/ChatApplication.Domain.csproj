@@ -59,6 +59,8 @@
     <Compile Include="Entities\Message.cs" />
     <Compile Include="Entities\PrivateChat.cs" />
     <Compile Include="Entities\PublicChat.cs" />
+    <Compile Include="Entities\UserGroupChat.cs" />
+    <Compile Include="Identity\Administrator.cs" />
     <Compile Include="Identity\ApplicationUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

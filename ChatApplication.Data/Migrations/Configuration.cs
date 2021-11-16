@@ -5,11 +5,8 @@ namespace ChatApplication.Data.Migrations
     using ChatApplication.Domain.Identity;
     using System;
     using System.Collections.Generic;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
-    using System.Security.Cryptography;
-    using System.Text;
 
     internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
@@ -19,7 +16,6 @@ namespace ChatApplication.Data.Migrations
             hashingService = new HashingService();
             AutomaticMigrationsEnabled = false;
         }
-
 
         protected override void Seed(ApplicationDbContext context)
         {
@@ -85,16 +81,18 @@ namespace ChatApplication.Data.Migrations
             };
 
             context.PrivateChats.AddOrUpdate(x => x.Id
-            ,new PrivateChat
+            , new PrivateChat
             {
                 Id = 1,
                 UserOne = users[0],
+                UserOneId = users[0].Id,
                 UserTwo = users[1],
+                UserTwoId = users[1].Id,
                 Messages = privateChatMessages.ToList()
             }); ;
 
             context.PublicChats.AddOrUpdate(x => x.Id
-            ,new PublicChat
+            , new PublicChat
             {
                 Id = 1,
                 Name = "Publieke Chat 1",
@@ -102,22 +100,54 @@ namespace ChatApplication.Data.Migrations
                 Messages = publicChatMessages.ToList()
             });
 
-            context.GroupChats.AddOrUpdate(x => x.Id
-            ,new GroupChat
+            var groupChat1 = new GroupChat
             {
                 Id = 1,
                 Name = "Groeps Chat 1",
                 Description = "De groeps chat waarbij niet iedereen mag meekijken en meepraten",
-                Users = groupChatUsers.ToList(),
+                Groupmoderator = users[2],
+                GroupmoderatorId = users[2].Id,
+                Password = null,
                 Messages = groupChatMessages.ToList()
-            });
+            };
+
+            var userGroupChats1 = new UserGroupChat[]
+            { 
+                new UserGroupChat
+                {
+                    GroupChat = groupChat1,
+                    GroupChatId = groupChat1.Id,
+                    User = groupChatUsers[0],
+                    UserId = groupChatUsers[0].Id
+                }
+            };
+
+            context.GroupChats.AddOrUpdate(x => x.Id, groupChat1);
+
+            context.UserGroupChats.AddOrUpdate(x => x.Id, userGroupChats1);
 
             context.Users.AddOrUpdate(x => x.Id, users);
-            context.Users.AddOrUpdate(x => x.Id, groupChatUsers);
 
             context.Messages.AddOrUpdate(x => x.Id, privateChatMessages);
             context.Messages.AddOrUpdate(x => x.Id, publicChatMessages);
             context.Messages.AddOrUpdate(x => x.Id, groupChatMessages);
+
+            //Create Admin
+
+            string adminSalt = hashingService.CreateSalt();
+            string adminPassword = hashingService.CreatePasswordHash("Adminadmin123!", adminSalt);
+
+            Administrator admin = new Administrator
+            {
+                Id = "08a1f26d-c8db-49b5-90c1-60f2015abbe9",
+                Email = "Admin123@gmail.com",
+                EmailConfirmed = true,
+                UserName = "Admin123",
+                PasswordHash = adminPassword,
+                Salt = adminSalt
+            };
+
+            context.Administrators.AddOrUpdate(x => x.Id, admin);
 
         }
     }

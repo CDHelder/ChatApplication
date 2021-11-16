@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using ChatApplication.Domain.Entities;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace ChatApplication.Domain.Identity
     public class ApplicationUser : IdentityUser
     {
         public string Salt { get; set; }
+        public bool IsBlocked { get; set; }
+        public List<UserGroupChat> UserGroupChats { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {

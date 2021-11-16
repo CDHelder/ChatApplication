@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatApplication.Domain.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,8 @@ namespace ChatApplication.Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        //TODO: Maak Many2Many Tabel met PublicChat en User
+        public List<ApplicationUser> Users { get; set; }
         public List<Message> Messages { get; set; }
     }
 }

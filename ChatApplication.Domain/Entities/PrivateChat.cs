@@ -11,7 +11,9 @@ namespace ChatApplication.Domain.Entities
     {
         public int Id { get; set; }
         public List<Message> Messages { get; set; }
+        public string UserOneId { get; set; }
         public ApplicationUser UserOne { get; set; }
+        public string UserTwoId { get; set; }
         public ApplicationUser UserTwo { get; set; }
     }
 }

@@ -56,6 +56,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="BuilderExtensions\AdministratorConfiguration.cs" />
+    <Compile Include="BuilderExtensions\GroupChatConfiguration.cs" />
+    <Compile Include="BuilderExtensions\MessageConfiguration.cs" />
+    <Compile Include="BuilderExtensions\PrivateChatConfiguration.cs" />
+    <Compile Include="BuilderExtensions\PublicChatConfiguration.cs" />
+    <Compile Include="BuilderExtensions\UserGroupChatConfiguration.cs" />
     <Compile Include="Migrations\202111031320363_CreateDatabase.cs" />
     <Compile Include="Migrations\202111031320363_CreateDatabase.Designer.cs">
       <DependentUpon>202111031320363_CreateDatabase.cs</DependentUpon>
@@ -67,6 +73,18 @@
     <Compile Include="Migrations\202111151246156_ChangeSaltToString.cs" />
     <Compile Include="Migrations\202111151246156_ChangeSaltToString.Designer.cs">
       <DependentUpon>202111151246156_ChangeSaltToString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111160935232_AddGroupModerator.cs" />
+    <Compile Include="Migrations\202111160935232_AddGroupModerator.Designer.cs">
+      <DependentUpon>202111160935232_AddGroupModerator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111160943079_CreateAdminTable.cs" />
+    <Compile Include="Migrations\202111160943079_CreateAdminTable.Designer.cs">
+      <DependentUpon>202111160943079_CreateAdminTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111161434363_RecreateDatabase.cs" />
+    <Compile Include="Migrations\202111161434363_RecreateDatabase.Designer.cs">
+      <DependentUpon>202111161434363_RecreateDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,6 +112,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111151246156_ChangeSaltToString.resx">
       <DependentUpon>202111151246156_ChangeSaltToString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111160935232_AddGroupModerator.resx">
+      <DependentUpon>202111160935232_AddGroupModerator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111160943079_CreateAdminTable.resx">
+      <DependentUpon>202111160943079_CreateAdminTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111161434363_RecreateDatabase.resx">
+      <DependentUpon>202111161434363_RecreateDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

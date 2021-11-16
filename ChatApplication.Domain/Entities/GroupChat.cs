@@ -12,8 +12,10 @@ namespace ChatApplication.Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Password { get; set; }
+        public string GroupmoderatorId { get; set; }
+        public ApplicationUser Groupmoderator { get; set; }
         public List<Message> Messages { get; set; }
-        public List<ApplicationUser> Users { get; set; }
-
+        public List<UserGroupChat> UserGroupChats { get; set; }
     }
 }
