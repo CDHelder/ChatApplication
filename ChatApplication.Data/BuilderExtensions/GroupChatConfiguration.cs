@@ -16,7 +16,6 @@ namespace ChatApplication.Data.BuilderExtensions
             ToTable("GroupChats");
             HasKey(x => x.Id);
             Property(x => x.Name).IsRequired();
-            HasRequired(x => x.Groupmoderator).WithMany().HasForeignKey(x => x.GroupmoderatorId);
             HasMany(x => x.Messages).WithOptional().HasForeignKey(x => x.GroupChatId);
             HasMany(x => x.UserGroupChats).WithRequired(x => x.GroupChat).HasForeignKey(x => x.GroupChatId);
         }

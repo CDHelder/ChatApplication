@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace ChatApplication.Domain.Entities
 {
-    //TODO: Maak alle ids in de objecten en Fluent API
     public class Message
     {
         public int Id { get; set; }

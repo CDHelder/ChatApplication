@@ -8,7 +8,7 @@ namespace ChatApplication.Data.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
+    public class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
         private HashingService hashingService;
         public Configuration()
@@ -40,7 +40,8 @@ namespace ChatApplication.Data.Migrations
             string userPassword_5 = hashingService.CreatePasswordHash("ChrisChris123!", userSalt_5);
             string userPassword_6 = hashingService.CreatePasswordHash("DaanDaan123!", userSalt_6);
 
-            ApplicationUser[] users = new ApplicationUser[] {
+            ApplicationUser[] users = new ApplicationUser[] 
+            {
                 new ApplicationUser { Id = userId_1, Email = "Henk123@gmail.com", EmailConfirmed = true, UserName = "Henk123", PasswordHash = userPassword_1, Salt = userSalt_1 },
                 new ApplicationUser { Id = userId_2, Email = "Jaap123@gmail.com", EmailConfirmed = true, UserName = "Jaap123", PasswordHash = userPassword_2, Salt = userSalt_2 },
                 new ApplicationUser { Id = userId_3, Email = "Piet123@gmail.com", EmailConfirmed = true, UserName = "Piet123", PasswordHash = userPassword_3, Salt = userSalt_3  },
@@ -53,7 +54,9 @@ namespace ChatApplication.Data.Migrations
                 new ApplicationUser { Id = userId_6, Email = "Daan123@gmail.com", EmailConfirmed = true, UserName = "Daan123", PasswordHash = userPassword_6, Salt = userSalt_6  }
             };
 
-            Message[] privateChatMessages = new Message[] {
+            //TODO: Voeg sender en senderid toe aan ALLE messages
+            Message[] privateChatMessages = new Message[] 
+            {
                 new Message { Id = 1, Content = "Private Chat Message Bericht 1", ReadByReciever = false, SendDate = DateTime.Today,},
                 new Message { Id = 2, Content = "Private Chat Message Bericht 2", ReadByReciever = false, SendDate = DateTime.Today,},
                 new Message { Id = 3, Content = "Private Chat Message Bericht 3", ReadByReciever = false, SendDate = DateTime.Today,},
@@ -62,7 +65,8 @@ namespace ChatApplication.Data.Migrations
                 new Message { Id = 6, Content = "Private Chat Message Bericht 6", ReadByReciever = false, SendDate = DateTime.Today,}
             };
 
-            Message[] publicChatMessages = new Message[] {
+            Message[] publicChatMessages = new Message[] 
+            {
                 new Message { Id = 7, Content = "Public Chat Message Bericht 1", ReadByReciever = false, SendDate = DateTime.Today,},
                 new Message { Id = 8, Content = "Public Chat Message Bericht 2", ReadByReciever = false, SendDate = DateTime.Today,},
                 new Message { Id = 9, Content = "Public Chat Message Bericht 3", ReadByReciever = false, SendDate = DateTime.Today,},
@@ -71,7 +75,8 @@ namespace ChatApplication.Data.Migrations
                 new Message { Id = 12, Content = "Public Chat Message Bericht 6", ReadByReciever = false, SendDate = DateTime.Today,}
             };
 
-            Message[] groupChatMessages = new Message[] {
+            Message[] groupChatMessages = new Message[] 
+            {
                 new Message { Id = 13, Content = "Group Chat Message Bericht 1", ReadByReciever = false, SendDate = DateTime.Today,},
                 new Message { Id = 14, Content = "Group Chat Message Bericht 2", ReadByReciever = false, SendDate = DateTime.Today,},
                 new Message { Id = 15, Content = "Group Chat Message Bericht 3", ReadByReciever = false, SendDate = DateTime.Today,},
@@ -80,8 +85,7 @@ namespace ChatApplication.Data.Migrations
                 new Message { Id = 18, Content = "Group Chat Message Bericht 6", ReadByReciever = false, SendDate = DateTime.Today,}
             };
 
-            context.PrivateChats.AddOrUpdate(x => x.Id
-            , new PrivateChat
+            var privateChat1 = new PrivateChat
             {
                 Id = 1,
                 UserOne = users[0],
@@ -89,42 +93,66 @@ namespace ChatApplication.Data.Migrations
                 UserTwo = users[1],
                 UserTwoId = users[1].Id,
                 Messages = privateChatMessages.ToList()
-            }); ;
-
-            context.PublicChats.AddOrUpdate(x => x.Id
-            , new PublicChat
+            }; 
+            
+            var publicChat1 = new PublicChat
             {
                 Id = 1,
                 Name = "Publieke Chat 1",
                 Description = "De publieke chat waarbij iedereen mag praten",
                 Messages = publicChatMessages.ToList()
-            });
+            };
+
+            var userPublicChat1 = new UserPublicChat[]
+            {
+                new UserPublicChat
+                {
+                    Id = 1,
+                    PublicChat = publicChat1,
+                    PublicChatId = publicChat1.Id,
+                    User = users[3],
+                    ApplicationUserId = users[3].Id
+                }
+            };
 
             var groupChat1 = new GroupChat
             {
                 Id = 1,
                 Name = "Groeps Chat 1",
                 Description = "De groeps chat waarbij niet iedereen mag meekijken en meepraten",
-                Groupmoderator = users[2],
-                GroupmoderatorId = users[2].Id,
                 Password = null,
                 Messages = groupChatMessages.ToList()
             };
 
             var userGroupChats1 = new UserGroupChat[]
-            { 
+            {
                 new UserGroupChat
                 {
                     GroupChat = groupChat1,
                     GroupChatId = groupChat1.Id,
                     User = groupChatUsers[0],
-                    UserId = groupChatUsers[0].Id
+                    ApplicationUserId = groupChatUsers[0].Id,
+                    UserGroupChatType = UserGroupChatType.User
+                },
+                new UserGroupChat
+                {
+                    GroupChat = groupChat1,
+                    GroupChatId = groupChat1.Id,
+                    User = groupChatUsers[1],
+                    ApplicationUserId = groupChatUsers[1].Id,
+                    UserGroupChatType = UserGroupChatType.Moderator
                 }
             };
+
+            context.PrivateChats.AddOrUpdate(x => x.Id, privateChat1);
 
             context.GroupChats.AddOrUpdate(x => x.Id, groupChat1);
 
             context.UserGroupChats.AddOrUpdate(x => x.Id, userGroupChats1);
+
+            context.PublicChats.AddOrUpdate(x => x.Id, publicChat1);
+
+            context.UserPublicChats.AddOrUpdate(x => x.Id, userPublicChat1);
 
             context.Users.AddOrUpdate(x => x.Id, users);
 

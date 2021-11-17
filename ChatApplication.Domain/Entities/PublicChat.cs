@@ -12,8 +12,7 @@ namespace ChatApplication.Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        //TODO: Maak Many2Many Tabel met PublicChat en User
-        public List<ApplicationUser> Users { get; set; }
+        public List<UserPublicChat> UserPublicChats { get; set; }
         public List<Message> Messages { get; set; }
     }
 }

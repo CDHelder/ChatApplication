@@ -3,6 +3,7 @@ using ChatApplication.Domain.Entities;
 using ChatApplication.Domain.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Reflection;
 
 namespace ChatApplication.Data
@@ -11,6 +12,7 @@ namespace ChatApplication.Data
     {
         public ApplicationDbContext() : base("ChatApplicationDbContext", throwIfV1Schema: false)
         {
+
         }
 
         public static ApplicationDbContext Create()
@@ -24,12 +26,15 @@ namespace ChatApplication.Data
         public DbSet<PublicChat> PublicChats { get; set; }
         public DbSet<Administrator> Administrators { get; set; }
         public DbSet<UserGroupChat> UserGroupChats { get; set; }
+        public DbSet<UserPublicChat> UserPublicChats { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
             builder.Configurations.AddFromAssembly(Assembly.GetExecutingAssembly());
+
+            builder.Conventions.Remove<ForeignKeyIndexConvention>();
         }
     }
 }

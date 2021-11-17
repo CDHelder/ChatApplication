@@ -14,7 +14,7 @@ namespace ChatApplication.Data.BuilderExtensions
         {
             ToTable("Messages");
             HasKey(x => x.Id);
-            HasRequired(x => x.Sender).WithMany().HasForeignKey(x => x.SenderId);
+            HasRequired(x => x.Sender).WithMany().HasForeignKey(x => x.SenderId).WillCascadeOnDelete(true);
             Property(x => x.Content).IsRequired();
         }
     }

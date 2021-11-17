@@ -16,6 +16,8 @@ namespace ChatApplication.Domain.Identity
         public string Salt { get; set; }
         public bool IsBlocked { get; set; }
         public List<UserGroupChat> UserGroupChats { get; set; }
+        public List<UserPublicChat> UserPublicChats { get; set; }
+        public List<Message> Messages { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {

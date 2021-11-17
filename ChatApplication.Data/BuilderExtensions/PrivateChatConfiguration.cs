@@ -15,8 +15,8 @@ namespace ChatApplication.Data.BuilderExtensions
             ToTable("PrivateChats");
             HasKey(x => x.Id);
             HasMany(x => x.Messages).WithOptional().HasForeignKey(x => x.PrivateChatId);
-            HasRequired(x => x.UserOne).WithMany().HasForeignKey(x => x.UserOneId);
-            HasRequired(x => x.UserTwo).WithMany().HasForeignKey(x => x.UserTwoId);
+            HasRequired(x => x.UserOne).WithMany().HasForeignKey(x => x.UserOneId).WillCascadeOnDelete(false);
+            HasRequired(x => x.UserTwo).WithMany().HasForeignKey(x => x.UserTwoId).WillCascadeOnDelete(false);
         }
     }
 }
