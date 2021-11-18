@@ -1,12 +1,11 @@
 namespace ChatApplication.Data.Migrations
 {
-    using ChatApplication.Business;
     using ChatApplication.Domain.Entities;
     using ChatApplication.Domain.Identity;
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using System.Security.Cryptography;
 
     public class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
@@ -54,35 +53,34 @@ namespace ChatApplication.Data.Migrations
                 new ApplicationUser { Id = userId_6, Email = "Daan123@gmail.com", EmailConfirmed = true, UserName = "Daan123", PasswordHash = userPassword_6, Salt = userSalt_6  }
             };
 
-            //TODO: Voeg sender en senderid toe aan ALLE messages
             Message[] privateChatMessages = new Message[] 
             {
-                new Message { Id = 1, Content = "Private Chat Message Bericht 1", ReadByReciever = false, SendDate = DateTime.Today,},
-                new Message { Id = 2, Content = "Private Chat Message Bericht 2", ReadByReciever = false, SendDate = DateTime.Today,},
-                new Message { Id = 3, Content = "Private Chat Message Bericht 3", ReadByReciever = false, SendDate = DateTime.Today,},
-                new Message { Id = 4, Content = "Private Chat Message Bericht 4", ReadByReciever = false, SendDate = DateTime.Today,},
-                new Message { Id = 5, Content = "Private Chat Message Bericht 5", ReadByReciever = false, SendDate = DateTime.Today,},
-                new Message { Id = 6, Content = "Private Chat Message Bericht 6", ReadByReciever = false, SendDate = DateTime.Today,}
+                new Message { Id = 1, Content = "Private Chat Message Bericht 1", ReadByReciever = false, SendDate = DateTime.Today, Sender = users[0], SenderId = users[0].Id },
+                new Message { Id = 2, Content = "Private Chat Message Bericht 2", ReadByReciever = false, SendDate = DateTime.Today, Sender = users[0], SenderId = users[0].Id },
+                new Message { Id = 3, Content = "Private Chat Message Bericht 3", ReadByReciever = false, SendDate = DateTime.Today, Sender = users[0], SenderId = users[0].Id },
+                new Message { Id = 4, Content = "Private Chat Message Bericht 4", ReadByReciever = false, SendDate = DateTime.Today, Sender = users[1], SenderId = users[1].Id },
+                new Message { Id = 5, Content = "Private Chat Message Bericht 5", ReadByReciever = false, SendDate = DateTime.Today, Sender = users[1], SenderId = users[1].Id },
+                new Message { Id = 6, Content = "Private Chat Message Bericht 6", ReadByReciever = false, SendDate = DateTime.Today, Sender = users[1], SenderId = users[1].Id }
             };
 
             Message[] publicChatMessages = new Message[] 
             {
-                new Message { Id = 7, Content = "Public Chat Message Bericht 1", ReadByReciever = false, SendDate = DateTime.Today,},
-                new Message { Id = 8, Content = "Public Chat Message Bericht 2", ReadByReciever = false, SendDate = DateTime.Today,},
-                new Message { Id = 9, Content = "Public Chat Message Bericht 3", ReadByReciever = false, SendDate = DateTime.Today,},
-                new Message { Id = 10, Content = "Public Chat Message Bericht 4", ReadByReciever = false, SendDate = DateTime.Today,},
-                new Message { Id = 11, Content = "Public Chat Message Bericht 5", ReadByReciever = false, SendDate = DateTime.Today,},
-                new Message { Id = 12, Content = "Public Chat Message Bericht 6", ReadByReciever = false, SendDate = DateTime.Today,}
+                new Message { Id = 7, Content = "Public Chat Message Bericht 1", ReadByReciever = false, SendDate = DateTime.Today, Sender = users[3], SenderId = users[3].Id },
+                new Message { Id = 8, Content = "Public Chat Message Bericht 2", ReadByReciever = false, SendDate = DateTime.Today, Sender = users[3], SenderId = users[3].Id },
+                new Message { Id = 9, Content = "Public Chat Message Bericht 3", ReadByReciever = false, SendDate = DateTime.Today, Sender = users[3], SenderId = users[3].Id },
+                new Message { Id = 10, Content = "Public Chat Message Bericht 4", ReadByReciever = false, SendDate = DateTime.Today, Sender = users[3], SenderId = users[3].Id },
+                new Message { Id = 11, Content = "Public Chat Message Bericht 5", ReadByReciever = false, SendDate = DateTime.Today, Sender = users[3], SenderId = users[3].Id },
+                new Message { Id = 12, Content = "Public Chat Message Bericht 6", ReadByReciever = false, SendDate = DateTime.Today, Sender = users[3], SenderId = users[3].Id }
             };
 
             Message[] groupChatMessages = new Message[] 
             {
-                new Message { Id = 13, Content = "Group Chat Message Bericht 1", ReadByReciever = false, SendDate = DateTime.Today,},
-                new Message { Id = 14, Content = "Group Chat Message Bericht 2", ReadByReciever = false, SendDate = DateTime.Today,},
-                new Message { Id = 15, Content = "Group Chat Message Bericht 3", ReadByReciever = false, SendDate = DateTime.Today,},
-                new Message { Id = 16, Content = "Group Chat Message Bericht 4", ReadByReciever = false, SendDate = DateTime.Today,},
-                new Message { Id = 17, Content = "Group Chat Message Bericht 5", ReadByReciever = false, SendDate = DateTime.Today,},
-                new Message { Id = 18, Content = "Group Chat Message Bericht 6", ReadByReciever = false, SendDate = DateTime.Today,}
+                new Message { Id = 13, Content = "Group Chat Message Bericht 1", ReadByReciever = false, SendDate = DateTime.Today, Sender = groupChatUsers[0], SenderId = groupChatUsers[0].Id },
+                new Message { Id = 14, Content = "Group Chat Message Bericht 2", ReadByReciever = false, SendDate = DateTime.Today, Sender = groupChatUsers[0], SenderId = groupChatUsers[0].Id },
+                new Message { Id = 15, Content = "Group Chat Message Bericht 3", ReadByReciever = false, SendDate = DateTime.Today, Sender = groupChatUsers[0], SenderId = groupChatUsers[0].Id },
+                new Message { Id = 16, Content = "Group Chat Message Bericht 4", ReadByReciever = false, SendDate = DateTime.Today, Sender = groupChatUsers[1], SenderId = groupChatUsers[1].Id },
+                new Message { Id = 17, Content = "Group Chat Message Bericht 5", ReadByReciever = false, SendDate = DateTime.Today, Sender = groupChatUsers[1], SenderId = groupChatUsers[1].Id },
+                new Message { Id = 18, Content = "Group Chat Message Bericht 6", ReadByReciever = false, SendDate = DateTime.Today, Sender = groupChatUsers[1], SenderId = groupChatUsers[1].Id }
             };
 
             var privateChat1 = new PrivateChat
@@ -177,6 +175,23 @@ namespace ChatApplication.Data.Migrations
 
             context.Administrators.AddOrUpdate(x => x.Id, admin);
 
+        }
+    }
+
+    public class HashingService
+    {
+        public string CreatePasswordHash(string password, string salt)
+        {
+            var byteSalt = Convert.FromBase64String(salt);
+            var pbkdf2 = new Rfc2898DeriveBytes(password, byteSalt, 100000);
+            return Convert.ToBase64String(pbkdf2.GetBytes(20));
+        }
+
+        public string CreateSalt()
+        {
+            byte[] pass = new byte[16];
+            new RNGCryptoServiceProvider().GetBytes(pass);
+            return Convert.ToBase64String(pass);
         }
     }
 }

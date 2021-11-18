@@ -16,12 +16,15 @@ namespace ChatApplication.Data.Service
         private UoFMessageRepository _messageRepository;
         private UoFPrivateChatRepository _privateChatRepository;
         private UoFPublicChatRepository _publicChatRepository;
+        private UoFUserPublicChatRepository _userPublicChatRepository;
+        private UoFUserGroupChatRepository _userGroupChatRepository;
 
         public UnitOfWork(ApplicationDbContext dbContext)
         {
             this._dbContext = dbContext;
         }
 
+        //TODO: VERVANG DIE ALLE FKING GROEPSOORTEN MODELS MET GROUP REPOSITORY 
         public UoFApplicationUserRepository ApplicationUserRepository 
         {
             get => _applicationUserRepository ?? new UoFApplicationUserRepository(_dbContext);
@@ -46,6 +49,16 @@ namespace ChatApplication.Data.Service
         {
             get => _publicChatRepository ?? new UoFPublicChatRepository(_dbContext);
             private set => _publicChatRepository = value;
+        }
+        public UoFUserPublicChatRepository UserPublicChatRepository
+        {
+            get => _userPublicChatRepository ?? new UoFUserPublicChatRepository(_dbContext);
+            private set => _userPublicChatRepository = value;
+        }
+        public UoFUserGroupChatRepository UserGroupChatRepository
+        {
+            get => _userGroupChatRepository ?? new UoFUserGroupChatRepository(_dbContext);
+            private set => _userGroupChatRepository = value;
         }
 
         public void Dispose()

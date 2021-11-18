@@ -9,6 +9,7 @@ namespace ChatApplication.Domain.Entities
 {
     public class GroupChat
     {
+        //TODO: VERVANG DIE ALLE FKING GROEPSOORTEN MODELS MET GROUP
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

@@ -75,10 +75,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ChatApplication.Business\ChatApplication.Business.csproj">
-      <Project>{62308C33-D599-4860-8917-27950F57FA00}</Project>
-      <Name>ChatApplication.Business</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ChatApplication.Domain\ChatApplication.Domain.csproj">
       <Project>{359b9fb2-c012-497c-b111-e25f9573a0ff}</Project>
       <Name>ChatApplication.Domain</Name>

@@ -12,7 +12,8 @@ namespace ChatApplication.Data
     {
         public ApplicationDbContext() : base("ChatApplicationDbContext", throwIfV1Schema: false)
         {
-
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
         }
 
         public static ApplicationDbContext Create()
@@ -20,6 +21,7 @@ namespace ChatApplication.Data
             return new ApplicationDbContext();
         }
 
+        //TODO: VERVANG DIE ALLE FKING GROEPSOORTEN MODELS MET GROUP
         public DbSet<GroupChat> GroupChats { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<PrivateChat> PrivateChats { get; set; }

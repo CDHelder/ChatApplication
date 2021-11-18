@@ -66,6 +66,8 @@
     <Compile Include="SpecificRepositories\UoFMessageRepository.cs" />
     <Compile Include="SpecificRepositories\UoFPrivateChatRepository.cs" />
     <Compile Include="SpecificRepositories\UoFPublicChatRepository.cs" />
+    <Compile Include="SpecificRepositories\UoFUserGroupChatRepository.cs" />
+    <Compile Include="SpecificRepositories\UoFUserPublicChatRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
