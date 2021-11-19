@@ -61,12 +61,17 @@
     <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="BuilderExtensions\AdministratorConfiguration.cs" />
     <Compile Include="BuilderExtensions\ApplicationUserConfiguration.cs" />
-    <Compile Include="BuilderExtensions\GroupChatConfiguration.cs" />
+    <Compile Include="BuilderExtensions\GroupConfiguration.cs" />
     <Compile Include="BuilderExtensions\MessageConfiguration.cs" />
-    <Compile Include="BuilderExtensions\PrivateChatConfiguration.cs" />
-    <Compile Include="BuilderExtensions\PublicChatConfiguration.cs" />
-    <Compile Include="BuilderExtensions\UserGroupChatConfiguration.cs" />
-    <Compile Include="BuilderExtensions\UserPublicChatConfiguration.cs" />
+    <Compile Include="BuilderExtensions\UserGroupConfiguration.cs" />
+    <Compile Include="Migrations\202111191100219_CreateDatabase.cs" />
+    <Compile Include="Migrations\202111191100219_CreateDatabase.designer.cs">
+      <DependentUpon>202111191100219_CreateDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111191300150_AddGroupUserType.cs" />
+    <Compile Include="Migrations\202111191300150_AddGroupUserType.designer.cs">
+      <DependentUpon>202111191300150_AddGroupUserType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -79,6 +84,14 @@
       <Project>{359b9fb2-c012-497c-b111-e25f9573a0ff}</Project>
       <Name>ChatApplication.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202111191100219_CreateDatabase.resx">
+      <DependentUpon>202111191100219_CreateDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111191300150_AddGroupUserType.resx">
+      <DependentUpon>202111191300150_AddGroupUserType.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

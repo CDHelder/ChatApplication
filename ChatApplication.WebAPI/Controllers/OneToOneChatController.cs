@@ -8,11 +8,12 @@ using System.Web.Http;
 namespace ChatApplication.WebAPI.Controllers
 {
     [AllowAnonymous]
-    [RoutePrefix("api/Public")]
-    public class PublicChatController : ApiController
+    [RoutePrefix("api/OneToOne")]
+    public class OneToOneChatController : ApiController
     {
         private GroupService groupService;
-        PublicChatController()
+
+        public OneToOneChatController()
         {
             groupService = new GroupService();
         }
@@ -20,7 +21,7 @@ namespace ChatApplication.WebAPI.Controllers
         [HttpGet, Route("All")]
         public List<GroupViewModel> GetAllPublicGroups()
         {
-            var groups = groupService.GetAllGroups(GroupType.Public);
+            var groups = groupService.GetAllGroups(GroupType.OneToOne);
             var viewmodel = new List<GroupViewModel>();
 
             foreach (var group in groups)
@@ -32,7 +33,7 @@ namespace ChatApplication.WebAPI.Controllers
         [HttpGet, Route("{id}")]
         public GroupViewModel GetPublicGroup(int id)
         {
-            var group = groupService.GetGroup(id, GroupType.Public);
+            var group = groupService.GetGroup(id, GroupType.OneToOne);
             var users = groupService.GetGroupUsers(id);
 
             //TODO: Vervang door AutoMapper
@@ -40,7 +41,6 @@ namespace ChatApplication.WebAPI.Controllers
 
             return new GroupViewModel { Group = group, Users = usersVM };
         }
-
 
         private static List<UserViewModel> MapUsers(List<ApplicationUser> users)
         {

@@ -66,9 +66,8 @@ namespace ChatApplication.Data.Service
             IQueryable<T> query = dbSet;
 
             if (filter != null)
-            {
                 query = query.Where(filter);
-            }
+
 
             if (orderBy != null)
                 return orderBy(query).ToList();

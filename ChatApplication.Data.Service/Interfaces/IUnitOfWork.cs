@@ -10,10 +10,9 @@ namespace ChatApplication.Data.Service.Interfaces
     public interface IUnitOfWork : IDisposable
     {
         UoFApplicationUserRepository ApplicationUserRepository { get; }
-        UoFGroupChatRepository GroupChatRepository { get; }
         UoFMessageRepository MessageRepository { get; }
-        UoFPrivateChatRepository PrivateChatRepository { get; }
-        UoFPublicChatRepository PublicChatRepository { get; }
+        UoFGroupRepository GroupRepository { get; }
+        UoFUserGroupRepository UserGroupRepository { get; }
         bool SaveChanges();
     }
 }

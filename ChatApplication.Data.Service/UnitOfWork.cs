@@ -12,53 +12,34 @@ namespace ChatApplication.Data.Service
     {
         private readonly ApplicationDbContext _dbContext;
         private UoFApplicationUserRepository _applicationUserRepository;
-        private UoFGroupChatRepository _groupChatRepository;
         private UoFMessageRepository _messageRepository;
-        private UoFPrivateChatRepository _privateChatRepository;
-        private UoFPublicChatRepository _publicChatRepository;
-        private UoFUserPublicChatRepository _userPublicChatRepository;
-        private UoFUserGroupChatRepository _userGroupChatRepository;
+        private UoFGroupRepository _groupRepository;
+        private UoFUserGroupRepository _userGroupRepository;
 
         public UnitOfWork(ApplicationDbContext dbContext)
         {
             this._dbContext = dbContext;
         }
 
-        //TODO: VERVANG DIE ALLE FKING GROEPSOORTEN MODELS MET GROUP REPOSITORY 
         public UoFApplicationUserRepository ApplicationUserRepository 
         {
             get => _applicationUserRepository ?? new UoFApplicationUserRepository(_dbContext);
             private set => _applicationUserRepository = value;
-        }
-        public UoFGroupChatRepository GroupChatRepository 
-        {
-            get => _groupChatRepository ?? new UoFGroupChatRepository(_dbContext);
-            private set => _groupChatRepository = value;
         }
         public UoFMessageRepository MessageRepository 
         {
             get => _messageRepository ?? new UoFMessageRepository(_dbContext);
             private set => _messageRepository = value;
         }
-        public UoFPrivateChatRepository PrivateChatRepository 
+        public UoFGroupRepository GroupRepository
         {
-            get => _privateChatRepository ?? new UoFPrivateChatRepository(_dbContext);
-            private set => _privateChatRepository = value;
+            get => _groupRepository ?? new UoFGroupRepository(_dbContext);
+            private set => _groupRepository = value;
         }
-        public UoFPublicChatRepository PublicChatRepository 
+        public UoFUserGroupRepository UserGroupRepository
         {
-            get => _publicChatRepository ?? new UoFPublicChatRepository(_dbContext);
-            private set => _publicChatRepository = value;
-        }
-        public UoFUserPublicChatRepository UserPublicChatRepository
-        {
-            get => _userPublicChatRepository ?? new UoFUserPublicChatRepository(_dbContext);
-            private set => _userPublicChatRepository = value;
-        }
-        public UoFUserGroupChatRepository UserGroupChatRepository
-        {
-            get => _userGroupChatRepository ?? new UoFUserGroupChatRepository(_dbContext);
-            private set => _userGroupChatRepository = value;
+            get => _userGroupRepository ?? new UoFUserGroupRepository(_dbContext);
+            private set => _userGroupRepository = value;
         }
 
         public void Dispose()

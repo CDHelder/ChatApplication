@@ -2,37 +2,30 @@
 using ChatApplication.Domain.Entities;
 using ChatApplication.Domain.Identity;
 using ChatApplication.WebAPI.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 
 namespace ChatApplication.WebAPI.Controllers
 {
     [AllowAnonymous]
-    [RoutePrefix("api/Public")]
-    public class PublicChatController : ApiController
+    [RoutePrefix("api/Groups")]
+    public class GroupController : ApiController
     {
-        private GroupService groupService;
-        PublicChatController()
+        private readonly GroupService groupService;
+
+        public GroupController()
         {
             groupService = new GroupService();
         }
 
-        [HttpGet, Route("All")]
-        public List<GroupViewModel> GetAllPublicGroups()
-        {
-            var groups = groupService.GetAllGroups(GroupType.Public);
-            var viewmodel = new List<GroupViewModel>();
-
-            foreach (var group in groups)
-                viewmodel.Add(new GroupViewModel { Group = group, Users = MapUsers(groupService.GetGroupUsers(group.Id)) });
-
-            return viewmodel;
-        }
-
         [HttpGet, Route("{id}")]
-        public GroupViewModel GetPublicGroup(int id)
+        public GroupViewModel GetGroup(int id)
         {
-            var group = groupService.GetGroup(id, GroupType.Public);
+            var group = groupService.GetGroup(id);
             var users = groupService.GetGroupUsers(id);
 
             //TODO: Vervang door AutoMapper
@@ -41,8 +34,7 @@ namespace ChatApplication.WebAPI.Controllers
             return new GroupViewModel { Group = group, Users = usersVM };
         }
 
-
-        private static List<UserViewModel> MapUsers(List<ApplicationUser> users)
+        public static List<UserViewModel> MapUsers(List<ApplicationUser> users)
         {
             var usersVM = new List<UserViewModel>();
             foreach (var user in users)

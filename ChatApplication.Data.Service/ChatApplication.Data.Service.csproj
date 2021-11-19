@@ -62,12 +62,9 @@
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecificRepositories\UoFApplicationUserRepository.cs" />
-    <Compile Include="SpecificRepositories\UoFGroupChatRepository.cs" />
+    <Compile Include="SpecificRepositories\UoFGroupRepository.cs" />
     <Compile Include="SpecificRepositories\UoFMessageRepository.cs" />
-    <Compile Include="SpecificRepositories\UoFPrivateChatRepository.cs" />
-    <Compile Include="SpecificRepositories\UoFPublicChatRepository.cs" />
-    <Compile Include="SpecificRepositories\UoFUserGroupChatRepository.cs" />
-    <Compile Include="SpecificRepositories\UoFUserPublicChatRepository.cs" />
+    <Compile Include="SpecificRepositories\UoFUserGroupRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>

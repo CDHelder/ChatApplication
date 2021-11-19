@@ -33,7 +33,7 @@ namespace ChatApplication.WebAPI.Controllers
 
         }
 
-        //TODO: Dependency Injection toepassen??
+        //TODO: Dependency Injection toepassen
         public AccountController(ApplicationUserManager userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {

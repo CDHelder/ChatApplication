@@ -10,10 +10,10 @@ namespace ChatApplication.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext() : base("ChatApplicationDbContext", throwIfV1Schema: false)
+        public ApplicationDbContext() : base("ChatApplicationDbContext-2.0", throwIfV1Schema: false)
         {
-            Configuration.LazyLoadingEnabled = false;
-            Configuration.ProxyCreationEnabled = false;
+            //Configuration.LazyLoadingEnabled = false;
+            //Configuration.ProxyCreationEnabled = false;
         }
 
         public static ApplicationDbContext Create()
@@ -21,14 +21,10 @@ namespace ChatApplication.Data
             return new ApplicationDbContext();
         }
 
-        //TODO: VERVANG DIE ALLE FKING GROEPSOORTEN MODELS MET GROUP
-        public DbSet<GroupChat> GroupChats { get; set; }
         public DbSet<Message> Messages { get; set; }
-        public DbSet<PrivateChat> PrivateChats { get; set; }
-        public DbSet<PublicChat> PublicChats { get; set; }
         public DbSet<Administrator> Administrators { get; set; }
-        public DbSet<UserGroupChat> UserGroupChats { get; set; }
-        public DbSet<UserPublicChat> UserPublicChats { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<UserGroup> UserGroups { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder builder)
         {

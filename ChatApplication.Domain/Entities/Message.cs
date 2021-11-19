@@ -13,10 +13,8 @@ namespace ChatApplication.Domain.Entities
         public string Content { get; set; }
         public DateTime SendDate { get; set; }
         public bool ReadByReciever { get; set; }
-        public string SenderId { get; set; }
-        public ApplicationUser Sender { get; set; }
-        public int? GroupChatId { get; set; }
-        public int? PrivateChatId { get; set; }
-        public int? PublicChatId { get; set; }
+        public string UserId { get; set; }
+        public string UserName { get; set; }
+        public int GroupId { get; set; }
     }
 }

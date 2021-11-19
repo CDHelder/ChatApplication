@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ChatApplication.Data.Service.SpecificRepositories
 {
-    public class UoFUserGroupChatRepository : GenericRepository<UserGroupChat>
+    public class UoFUserGroupRepository : GenericRepository<UserGroup>
     {
-        public UoFUserGroupChatRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public UoFUserGroupRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
 
         }

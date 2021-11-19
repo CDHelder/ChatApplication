@@ -59,12 +59,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\GroupChat.cs" />
+    <Compile Include="Entities\Group.cs" />
     <Compile Include="Entities\Message.cs" />
-    <Compile Include="Entities\PrivateChat.cs" />
-    <Compile Include="Entities\PublicChat.cs" />
-    <Compile Include="Entities\UserGroupChat.cs" />
-    <Compile Include="Entities\UserPublicChat.cs" />
+    <Compile Include="Entities\UserGroup.cs" />
     <Compile Include="Identity\Administrator.cs" />
     <Compile Include="Identity\ApplicationUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

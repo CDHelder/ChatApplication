@@ -13,9 +13,7 @@ namespace ChatApplication.Data.BuilderExtensions
     {
         public ApplicationUserConfiguration()
         {
-            HasMany<UserGroupChat>(a => a.UserGroupChats).WithRequired(a => a.User).HasForeignKey(a => a.ApplicationUserId);
-            HasMany<UserPublicChat>(a => a.UserPublicChats).WithRequired(a => a.User).HasForeignKey(a => a.ApplicationUserId);
-            HasMany<Message>(a => a.Messages).WithRequired(a => a.Sender).HasForeignKey(a => a.SenderId);
+            HasMany(a => a.Messages).WithRequired().HasForeignKey(a => a.UserId).WillCascadeOnDelete(false);
         }
     }
 }
